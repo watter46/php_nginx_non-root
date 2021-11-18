@@ -6,7 +6,7 @@ up:
 				@make build
 				docker compose up -d
 down:
-				docker compose down --rmi all --volumes --remove-orphans
+				docker compose down
 logs:
 				docker compose logs
 app:
