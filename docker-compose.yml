@@ -1,0 +1,33 @@
+version: '3'
+
+volumes:
+  php_sockert:
+
+services:
+  web:
+    container_name: web
+    build: 
+      context: .
+      dockerfile: ./infra/docker/nginx/Dockerfile
+      args:
+          - USER_ID=${USER_ID}
+          - GROUP_ID=${GROUP_ID}
+    ports:
+      - 28000:8080
+    volumes:
+      - ./infra/docker/html:/var/www/html
+      - php_sockert:/var/run/php-fpm
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./infra/docker/php/Dockerfile
+      args:
+        - USER_ID=${USER_ID}
+        - GROUP_ID=${GROUP_ID}
+    volumes:
+      - ./infra/docker/html/index.php:/var/www/html/index.php
+      - php_sockert:/var/run/php-fpm
+    depends_on:
+      - web
