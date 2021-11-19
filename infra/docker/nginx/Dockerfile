@@ -1,8 +1,5 @@
 FROM nginx:1.20
 
-COPY ./infra/docker/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./infra/docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-
 ARG GROUP_NAME=hoge
 ARG GROUP_ID ${GROUP_ID}
 ARG USER_NAME=hoge
@@ -14,4 +11,9 @@ RUN groupadd -g $GROUP_ID $GROUP_NAME && \
        chmod -R g+w /var/cache/nginx && \
        chown -R www-data:www-data /etc/nginx/conf.d
 
+COPY ./infra/docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./infra/docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+
 USER $USER_NAME
+
+WORKDIR /var/www/backend

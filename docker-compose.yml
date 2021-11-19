@@ -15,7 +15,7 @@ services:
     ports:
       - 28000:8080
     volumes:
-      - ./infra/docker/html:/var/www/html
+      - ./backend:/var/www/backend
       - php_sockert:/var/run/php-fpm
 
   app:
@@ -27,7 +27,7 @@ services:
         - USER_ID=${USER_ID}
         - GROUP_ID=${GROUP_ID}
     volumes:
-      - ./infra/docker/html/index.php:/var/www/html/index.php
+      - ./backend:/var/www/backend
       - php_sockert:/var/run/php-fpm
     depends_on:
       - web
